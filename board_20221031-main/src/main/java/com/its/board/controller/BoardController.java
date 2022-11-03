@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -56,10 +57,12 @@ public class BoardController {
 
     // 상세조회: /board?id=
     @GetMapping
-    public String findById(@RequestParam("id") Long id, Model model) {
+    public String findById(@RequestParam("id") Long id, Model model,
+                           @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
+        model.addAttribute("page", page);
         System.out.println("조회: boardDTO = " + boardDTO);
         return "boardPages/boardDetail";
     }
