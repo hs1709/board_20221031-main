@@ -102,10 +102,13 @@ public class BoardController {
         return "redirect:/board/";
     }
 
-//    @GetMapping("/search")
-//    public String search(@RequestParam("") String ) {
-//        return ;
-//    }
+    @GetMapping("/search")
+    public String search(@RequestParam("type") String type,
+                         @RequestParam("q") String q, Model model) {
+        List<BoardDTO> searchList = boardService.search(type, q);
+        model.addAttribute("boardList", searchList);
+        return "boardPages/boardList";
+    }
 
 
 
